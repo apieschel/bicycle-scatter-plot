@@ -41,8 +41,8 @@ const callback = function(err, data) {
     const minY = d3.min(parsedData, (d) => d);
     const maxY = d3.max(parsedData, (d) => d);
     const yScale = d3.scaleTime()
-                      .domain(d3.extent(data, function(d) {
-                        return d.Time;
+                      .domain(d3.extent(parsedData, function(d) {
+                        return d;
                       }))
                       .range([0, h - padding]);
     const yAxis = d3.axisLeft(yScale)
