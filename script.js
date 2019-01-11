@@ -10,7 +10,7 @@ const callback = function(err, data) {
     
     const w = 1200
     const h = 750;
-    const padding = 50;
+    const padding = 60;
     
     let dates = [];
     let times = [];
@@ -41,7 +41,7 @@ const callback = function(err, data) {
                       .domain(d3.extent(times, function(d) {
                         return d;
                       }))
-                      .range([0, h - padding]);
+                      .range([20, h - padding]);
     const yAxis = d3.axisLeft(yScale)
                       .tickFormat(d3.timeFormat(specifier));
     
@@ -72,6 +72,9 @@ const callback = function(err, data) {
        .attr("cx", (d) => xScale(d[0]))
        .attr("cy", (d) => yScale(d[1]))
        .attr("r", 5)
+       .attr("class", "dot")
+       .attr("data-xvalue", (d) => d[0])
+       .attr("data-yvalue", (d) => d[1])
     
   }
 }
