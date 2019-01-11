@@ -12,21 +12,30 @@ const callback = function(err, data) {
     const h = 750;
     const padding = 50;
     
-    let dates = []
+    let dates = [];
+    let times = [];
     
     for(let i = 0; i < dataset.length; i++) {
       dates.push(dataset[i].Year);
+      times.push(dataset[i].Time);
     }
-    console.log(dates); 
+    
     const minX = d3.min(dates, (d) => d);
     const maxX = d3.max(dates, (d) => d);
-    console.log(maxX);
     const xScale = d3.scaleLinear()
                       .domain([minX, maxX + 1])
                       .range([padding, w - padding]);
     
     const xAxis = d3.axisBottom(xScale);
     xAxis.tickFormat(d3.format("d"));
+    
+    console.log(times);
+    const minY = d3.min(times, (d) => d);
+    const maxY = d3.max(times, (d) => d);
+    const yScale = d3.scaleLinear()
+                         .domain([0, maxY])
+                         .range([h - padding, 0]);
+    const yAxis = d3.axisLeft(yScale);
     
     d3.select("body")
       .append("h1")
@@ -42,6 +51,11 @@ const callback = function(err, data) {
         .attr("transform", "translate(0," + (h - padding) + ")")
         .attr("id", "x-axis")
         .call(xAxis);
+    
+    svg.append("g")
+        .attr("transform", "translate(" + padding + ", 0)")
+        .attr("id", "y-axis")
+        .call(yAxis);
     
   }
 }
