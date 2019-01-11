@@ -16,16 +16,10 @@ const callback = function(err, data) {
     let times = [];
     let regexp = /:/;
     
+    // Formating minutes and seconds on a D3 axis: https://stackoverflow.com/questions/50690567/formating-minutes-and-seconds-on-a-d3-axis
     for(let i = 0; i < dataset.length; i++) {
-      let index = regexp.exec(dataset[i].Time).index;
-      console.log(index);
-      let minutes = parseInt(dataset[i].Time.substring(0, index));
-      console.log(minutes);
-      let seconds = parseInt(dataset[i].Time.substring(index + 1,));
-      console.log(seconds);
-      seconds = minutes * 60 + seconds;
       dates.push(dataset[i].Year);
-      times.push(seconds);
+      times.push(dataset[i].Time);
     }
     
     const minX = d3.min(dates, (d) => d);
@@ -38,12 +32,21 @@ const callback = function(err, data) {
     xAxis.tickFormat(d3.format("d"));
     
     console.log(times);
+    let specifier = "%M:%S";
+    let parsedData = times.map(function(d) {
+      return d3.timeParse(specifier)(d)
+    });
+    
     const minY = d3.min(times, (d) => d);
     const maxY = d3.max(times, (d) => d);
     const yScale = d3.scaleLinear()
-                         .domain([0, maxY])
+                         .domain(d3.extent(parsedData))
                          .range([h - padding, 0]);
-    const yAxis = d3.axisLeft(yScale);
+    const yAxis = d3.axisLeft(yScale)
+                      .tickValues(parsedData)
+                      .tickFormat(function(d, i) {
+                        return times[i]
+                      });
     
     d3.select("body")
       .append("h1")
