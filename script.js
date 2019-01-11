@@ -37,13 +37,13 @@ const callback = function(err, data) {
       return d3.timeParse(specifier)(d)
     });
     
-    const minY = d3.min(times, (d) => d);
-    const maxY = d3.max(times, (d) => d);
+    console.log(parsedData);
+    const minY = d3.min(parsedData, (d) => d);
+    const maxY = d3.max(parsedData, (d) => d);
     const yScale = d3.scaleLinear()
-                         .domain(d3.extent(parsedData))
-                         .range([h - padding, 0]);
+                         .domain([d3.timeParse(specifier)("36:50"), d3.timeParse(specifier)("39:45")])
+                         .range([0, h - padding]);
     const yAxis = d3.axisLeft(yScale)
-                      .tickValues(parsedData)
                       .tickFormat(function(d, i) {
                         return times[i]
                       });
