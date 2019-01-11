@@ -7,6 +7,39 @@ const callback = function(err, data) {
   } else {
     dataset = data;
     console.log(dataset);
+    
+    const w = 1200
+    const h = 750;
+    const padding = 50;
+    
+    let dates = []
+    
+    for(let i = 0; i < dataset.length; i++) {
+      dates.push(dataset[i].Year);
+    }
+    
+    const minX = d3.min(dates, (d) => d);
+    const maxX = d3.max(dates, (d) => d);
+    const xScale = d3.scaleLinear()
+                      .domain([minX, maxX])
+                      .range([padding, w - padding]);
+    const xAxis = d3.axisBottom(xScale);
+    
+    d3.select("body")
+      .append("h1")
+      .attr("id", "title")
+      .text("Doping in Professional Bicycle Racing");
+    
+    const svg = d3.select(".container")
+      .append("svg")
+      .attr("width", w)
+      .attr("height", h);
+    
+    svg.append("g")
+        .attr("transform", "translate(0," + (h - padding) + ")")
+        .attr("id", "x-axis")
+        .call(xAxis);
+    
   }
 }
 xhr.open('GET', 'https://raw.githubusercontent.com/freeCodeCamp/ProjectReferenceData/master/cyclist-data.json', true);
