@@ -14,12 +14,14 @@ const callback = function(err, data) {
     
     let dates = [];
     let times = [];
-    let regexp = /:/;
+    let datesAndTimes = [];
+    let specifier = "%M:%S";
     
     // Formating minutes and seconds on a D3 axis: https://stackoverflow.com/questions/50690567/formating-minutes-and-seconds-on-a-d3-axis
     for(let i = 0; i < dataset.length; i++) {
       dates.push(dataset[i].Year);
-      times.push(dataset[i].Time);
+      times.push(d3.timeParse(specifier)(dataset[i].Time));
+      datesAndTimes.push([dataset[i].Year, d3.timeParse(specifier)(dataset[i].Time)]);
     }
     
     const minX = d3.min(dates, (d) => d);
@@ -32,16 +34,11 @@ const callback = function(err, data) {
     xAxis.tickFormat(d3.format("d"));
     
     console.log(times);
-    let specifier = "%M:%S";
-    let parsedData = times.map(function(d) {
-      return d3.timeParse(specifier)(d)
-    });
-    
-    console.log(parsedData);
-    const minY = d3.min(parsedData, (d) => d);
-    const maxY = d3.max(parsedData, (d) => d);
+    console.log(datesAndTimes);
+    const minY = d3.min(times, (d) => d);
+    const maxY = d3.max(times, (d) => d);
     const yScale = d3.scaleTime()
-                      .domain(d3.extent(parsedData, function(d) {
+                      .domain(d3.extent(times, function(d) {
                         return d;
                       }))
                       .range([0, h - padding]);
@@ -67,6 +64,14 @@ const callback = function(err, data) {
         .attr("transform", "translate(" + padding + ", 0)")
         .attr("id", "y-axis")
         .call(yAxis);
+    
+    svg.selectAll("circle")
+       .data(datesAndTimes)
+       .enter()
+       .append("circle")
+       .attr("cx", (d) => xScale(d[0]))
+       .attr("cy", (d) => yScale(d[1]))
+       .attr("r", 5)
     
   }
 }
