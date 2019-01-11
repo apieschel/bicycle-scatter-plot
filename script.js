@@ -76,6 +76,16 @@ const callback = function(err, data) {
        .attr("data-xvalue", (d) => d[0])
        .attr("data-yvalue", (d) => d[1])
     
+    svg.append("g")
+      .attr("id", "legend")
+      .append("rect")
+      .attr("x", w - padding)
+      .attr("y", h / 2)
+      .attr("width", 10)
+      .attr("height", 10)
+      .attr("fill", "blue")
+      
+    
   }
 }
 xhr.open('GET', 'https://raw.githubusercontent.com/freeCodeCamp/ProjectReferenceData/master/cyclist-data.json', true);
