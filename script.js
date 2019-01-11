@@ -17,13 +17,16 @@ const callback = function(err, data) {
     for(let i = 0; i < dataset.length; i++) {
       dates.push(dataset[i].Year);
     }
-    
+    console.log(dates); 
     const minX = d3.min(dates, (d) => d);
     const maxX = d3.max(dates, (d) => d);
+    console.log(maxX);
     const xScale = d3.scaleLinear()
-                      .domain([minX, maxX])
+                      .domain([minX, maxX + 1])
                       .range([padding, w - padding]);
+    
     const xAxis = d3.axisBottom(xScale);
+    xAxis.tickFormat(d3.format("d"));
     
     d3.select("body")
       .append("h1")
