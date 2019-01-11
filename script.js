@@ -14,10 +14,18 @@ const callback = function(err, data) {
     
     let dates = [];
     let times = [];
+    let regexp = /:/;
     
     for(let i = 0; i < dataset.length; i++) {
+      let index = regexp.exec(dataset[i].Time).index;
+      console.log(index);
+      let minutes = parseInt(dataset[i].Time.substring(0, index));
+      console.log(minutes);
+      let seconds = parseInt(dataset[i].Time.substring(index + 1,));
+      console.log(seconds);
+      seconds = minutes * 60 + seconds;
       dates.push(dataset[i].Year);
-      times.push(dataset[i].Time);
+      times.push(seconds);
     }
     
     const minX = d3.min(dates, (d) => d);
