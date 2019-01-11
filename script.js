@@ -21,7 +21,7 @@ const callback = function(err, data) {
     for(let i = 0; i < dataset.length; i++) {
       dates.push(dataset[i].Year);
       times.push(d3.timeParse(specifier)(dataset[i].Time));
-      datesAndTimes.push([dataset[i].Year, d3.timeParse(specifier)(dataset[i].Time)]);
+      datesAndTimes.push([dataset[i].Year, d3.timeParse(specifier)(dataset[i].Time), dataset[i].Doping]);
     }
     
     const minX = d3.min(dates, (d) => d);
@@ -75,16 +75,41 @@ const callback = function(err, data) {
        .attr("class", "dot")
        .attr("data-xvalue", (d) => d[0])
        .attr("data-yvalue", (d) => d[1])
+       .attr("fill", (d) => {
+          if(d[2] === "") {
+            return "orange";
+          } else {
+            return "blue";
+          }
+        })
     
-    svg.append("g")
-      .attr("id", "legend")
-      .append("rect")
+    let legend = svg.append("g")
+                    .attr("id", "legend");
+      
+    legend.append("rect")
       .attr("x", w - padding)
       .attr("y", h / 2)
       .attr("width", 10)
       .attr("height", 10)
       .attr("fill", "blue")
       
+    legend.append("text")
+      .text("They did dope")
+      .attr("x", w - padding - 130)
+      .attr("y", (h / 2) + 10)
+    
+    legend.append("rect")
+      .attr("x", w - padding)
+      .attr("y", (h / 2) - 20)
+      .attr("width", 10)
+      .attr("height", 10)
+      .attr("fill", "orange")
+      
+    legend.append("text")
+      .text("They didn't dope")
+      .attr("x", w - padding - 130)
+      .attr("y", (h / 2) - 10)
+    
     
   }
 }
