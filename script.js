@@ -40,13 +40,13 @@ const callback = function(err, data) {
     console.log(parsedData);
     const minY = d3.min(parsedData, (d) => d);
     const maxY = d3.max(parsedData, (d) => d);
-    const yScale = d3.scaleLinear()
-                         .domain([d3.timeParse(specifier)("36:50"), d3.timeParse(specifier)("39:45")])
-                         .range([0, h - padding]);
+    const yScale = d3.scaleTime()
+                      .domain(d3.extent(data, function(d) {
+                        return d.Time;
+                      }))
+                      .range([0, h - padding]);
     const yAxis = d3.axisLeft(yScale)
-                      .tickFormat(function(d, i) {
-                        return times[i]
-                      });
+                      .tickFormat(d3.timeFormat(specifier));
     
     d3.select("body")
       .append("h1")
