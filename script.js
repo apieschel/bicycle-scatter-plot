@@ -45,6 +45,13 @@ const callback = function(err, data) {
     const yAxis = d3.axisLeft(yScale)
                       .tickFormat(d3.timeFormat(specifier));
     
+    let tooltip = d3
+      .select("body")
+      .append("div")
+      .attr("class", "tooltip")
+      .attr("id", "tooltip")
+      .style("opacity", 0);
+    
     d3.select("body")
       .append("h1")
       .attr("id", "title")
@@ -82,6 +89,23 @@ const callback = function(err, data) {
             return "blue";
           }
         })
+       .on("mouseover", function(d) {
+          tooltip
+            .transition()
+            .duration(100)
+            .style("opacity", 0.85);
+          tooltip
+            .html("<p><strong>Date:</strong> " + d[0] + "</p><p><strong>GDP:</strong> " + d[1] + "</p>")
+            .style("left", d3.event.pageX + 15 + "px")
+            .style("top", d3.event.pageY + 15 + "px");
+          tooltip.attr("data-date", d[0]);
+        })
+        .on("mouseout", function(d) {
+          tooltip
+            .transition()
+            .duration(100)
+            .style("opacity", 0);
+        });
     
     let legend = svg.append("g")
                     .attr("id", "legend");
