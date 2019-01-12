@@ -12,7 +12,7 @@ h1 {
 .container {
   display: flex; 
   justify-content:center;
-  margin-top: 100px;
+  margin-top: 20px;
 }
 
 .dot:hover {
@@ -21,10 +21,9 @@ h1 {
 
 .tooltip {
     position: absolute;			
-    text-align: center;			
-    width: 150px;					
+    width: 200px;					
     height: auto;					
-    padding: 5px;				
+    padding: 5px 10px;				
     font: 14px sans-serif;		
     background: lavender;	
     border: 0px;		

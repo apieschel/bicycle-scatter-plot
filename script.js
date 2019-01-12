@@ -84,9 +84,9 @@ const callback = function(err, data) {
        .attr("data-yvalue", (d) => d[1])
        .attr("fill", (d) => {
           if(d[2] === "") {
-            return "orange";
+            return "green";
           } else {
-            return "blue";
+            return "red";
           }
         })
        .on("mouseover", function(d) {
@@ -115,7 +115,7 @@ const callback = function(err, data) {
       .attr("y", h / 2)
       .attr("width", 10)
       .attr("height", 10)
-      .attr("fill", "blue")
+      .attr("fill", "red")
       
     legend.append("text")
       .text("Doping allegations")
@@ -127,7 +127,7 @@ const callback = function(err, data) {
       .attr("y", (h / 2) - 20)
       .attr("width", 10)
       .attr("height", 10)
-      .attr("fill", "orange")
+      .attr("fill", "green")
       
     legend.append("text")
       .text("No doping allegations")
