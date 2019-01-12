@@ -94,8 +94,8 @@ const callback = function(err, data) {
       .attr("fill", "blue")
       
     legend.append("text")
-      .text("They did dope")
-      .attr("x", w - padding - 130)
+      .text("Doping allegations")
+      .attr("x", w - padding - 160)
       .attr("y", (h / 2) + 10)
     
     legend.append("rect")
@@ -106,8 +106,8 @@ const callback = function(err, data) {
       .attr("fill", "orange")
       
     legend.append("text")
-      .text("They didn't dope")
-      .attr("x", w - padding - 130)
+      .text("No doping allegations")
+      .attr("x", w - padding - 160)
       .attr("y", (h / 2) - 10)
     
     
