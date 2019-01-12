@@ -21,7 +21,7 @@ const callback = function(err, data) {
     for(let i = 0; i < dataset.length; i++) {
       dates.push(dataset[i].Year);
       times.push(d3.timeParse(specifier)(dataset[i].Time));
-      datesAndTimes.push([dataset[i].Year, d3.timeParse(specifier)(dataset[i].Time), dataset[i].Doping]);
+      datesAndTimes.push([dataset[i].Year, d3.timeParse(specifier)(dataset[i].Time), dataset[i].Doping, dataset[i].Time, dataset[i].Name]);
     }
     
     const minX = d3.min(dates, (d) => d);
@@ -50,7 +50,7 @@ const callback = function(err, data) {
       .append("div")
       .attr("class", "tooltip")
       .attr("id", "tooltip")
-      .style("opacity", 0);
+      .style("opacity", 0)
     
     d3.select("body")
       .append("h1")
@@ -95,10 +95,10 @@ const callback = function(err, data) {
             .duration(100)
             .style("opacity", 0.85);
           tooltip
-            .html("<p><strong>Date:</strong> " + d[0] + "</p><p><strong>GDP:</strong> " + d[1] + "</p>")
+            .html("<p>" + d[4] + "</p><p><strong>Year:</strong> " + d[0] + "</p><p><strong>Time:</strong> " + d[3] + "</p><p>" + d[2] + "</p>")
             .style("left", d3.event.pageX + 15 + "px")
             .style("top", d3.event.pageY + 15 + "px");
-          tooltip.attr("data-date", d[0]);
+          tooltip.attr("data-year", d[0]);
         })
         .on("mouseout", function(d) {
           tooltip

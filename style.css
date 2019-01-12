@@ -8,3 +8,25 @@ body {
 h1 {
   text-align: center;
 }
+
+.container {
+  display: flex; 
+  justify-content:center;
+  margin-top: 100px;
+}
+
+.dot:hover {
+  fill: yellow;
+}
+
+.tooltip {
+    position: absolute;			
+    text-align: center;			
+    width: 150px;					
+    height: auto;					
+    padding: 5px;				
+    font: 14px sans-serif;		
+    background: lavender;	
+    border: 0px;		
+    pointer-events: none;
+}
