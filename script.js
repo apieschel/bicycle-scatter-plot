@@ -6,10 +6,9 @@ const callback = function(err, data) {
     alert('Something went wrong: ' + err);
   } else {
     dataset = data;
-    console.log(dataset);
     
-    const w = 1200
-    const h = 750;
+    const w = 900;
+    const h = 500;
     const padding = 60;
     
     let dates = [];
@@ -33,8 +32,6 @@ const callback = function(err, data) {
     const xAxis = d3.axisBottom(xScale);
     xAxis.tickFormat(d3.format("d"));
     
-    console.log(times);
-    console.log(datesAndTimes);
     const minY = d3.min(times, (d) => d);
     const maxY = d3.max(times, (d) => d);
     const yScale = d3.scaleTime()
@@ -45,7 +42,7 @@ const callback = function(err, data) {
     const yAxis = d3.axisLeft(yScale)
                       .tickFormat(d3.timeFormat(specifier));
     
-    let tooltip = d3
+    const tooltip = d3
       .select("body")
       .append("div")
       .attr("class", "tooltip")
@@ -86,7 +83,7 @@ const callback = function(err, data) {
           if(d[2] === "") {
             return "darkcyan";
           } else {
-            return "red";
+            return "crimson";
           }
         })
        .on("mouseover", function(d) {
@@ -112,19 +109,20 @@ const callback = function(err, data) {
       
     legend.append("rect")
       .attr("x", w - padding)
-      .attr("y", h / 2)
+      .attr("y", 10)
       .attr("width", 10)
       .attr("height", 10)
-      .attr("fill", "red")
+      .attr("fill", "crimson")
       
     legend.append("text")
       .text("Doping allegations")
       .attr("x", w - padding - 160)
-      .attr("y", (h / 2) + 10)
+      .attr("y", 20)
+      .attr("fill", "crimson")
     
     legend.append("rect")
       .attr("x", w - padding)
-      .attr("y", (h / 2) - 20)
+      .attr("y", 30)
       .attr("width", 10)
       .attr("height", 10)
       .attr("fill", "darkcyan")
@@ -132,11 +130,11 @@ const callback = function(err, data) {
     legend.append("text")
       .text("No doping allegations")
       .attr("x", w - padding - 160)
-      .attr("y", (h / 2) - 10)
-    
-    
+      .attr("y", 40)
+      .attr("fill", "darkcyan")
   }
 }
+
 xhr.open('GET', 'https://raw.githubusercontent.com/freeCodeCamp/ProjectReferenceData/master/cyclist-data.json', true);
 xhr.responseType = 'json';
 xhr.onload = function() {
