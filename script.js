@@ -84,7 +84,7 @@ const callback = function(err, data) {
        .attr("data-yvalue", (d) => d[1])
        .attr("fill", (d) => {
           if(d[2] === "") {
-            return "green";
+            return "darkcyan";
           } else {
             return "red";
           }
@@ -127,7 +127,7 @@ const callback = function(err, data) {
       .attr("y", (h / 2) - 20)
       .attr("width", 10)
       .attr("height", 10)
-      .attr("fill", "green")
+      .attr("fill", "darkcyan")
       
     legend.append("text")
       .text("No doping allegations")
